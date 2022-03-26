@@ -3,7 +3,7 @@ for i in {365..1000};do
 	# write text
 	datetime=`date -v -"$i"d "+%Y-%m-%dT%H:%M:%S"`
 
-	git checkout -b git-green
+	git checkout -B git-green
 
 	echo "$(date "+%Y-%m-%d") add $datetime\n" >> git-green.md
 
