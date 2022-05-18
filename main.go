@@ -21,7 +21,9 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/wangrunlin/git-green/cmd"
+import (
+	"github.com/wangrunlin/git-green/cmd"
+)
 
 func main() {
 	cmd.Execute()

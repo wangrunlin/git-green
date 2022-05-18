@@ -23,27 +23,98 @@ package cmd
 
 import (
 	"fmt"
-	"os"
 	"github.com/spf13/cobra"
-
-	"github.com/spf13/viper"
+	"os"
+	"os/exec"
+	"runtime"
+	"strings"
+	"time"
 )
 
 var cfgFile string
+var year int
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "git-green",
+	Use:   "green",
 	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Long:  `green long description`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
-	// Run: func(cmd *cobra.Command, args []string) { },
+	Run: func(cmd *cobra.Command, args []string) {
+		// verify default data
+
+		// default data
+		fmt.Print("默认生成最近一年（365天）的数据, 是否确认？[Y/n] ")
+		var yes string
+		fmt.Scanln(&yes)
+		if yes == "y" || strings.ToLower(yes) == "y" || yes == "" {
+			// 具体业务
+			// 0. 确保处于一个干净的具体上传权限的 git 项目
+			// 0.1 确保存在 git 命令
+
+			branch := "git-green"
+			// 1. checkout
+			s, _ := os.Stat(".git/refs/heads/" + branch)
+			if s != nil {
+				fmt.Println(branch + " 分支已存在")
+				exec.Command("git", "checkout", branch)
+			} else {
+
+				fmt.Println(branch + " 分支不存在, 新建分支")
+				exec.Command("git", "checkout", "-b", branch)
+			}
+			// 2. for each
+			filename := "git-green.md"
+
+			// 2.1 open file
+			f, err := os.OpenFile(filename, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+			if err != nil {
+				fmt.Println("文件打开失败: {}", err)
+			}
+			defer f.Close()
+
+			count := 10
+			date := time.Now()
+			var content string
+			for i := 0; i < count; i++ {
+				date = time.Now().AddDate(0, 0, -i).Local()
+
+				// write file
+				// 2.2 write file
+				content = date.String() + ": update by [Git Green](https://github.com/wangrunlin/git-green)\n"
+				_, err := f.WriteString(content)
+				if err != nil {
+					fmt.Println("不能写入文件: {}", err)
+					return
+				}
+
+				// 3. modify date
+				message := "Update git-green.md"
+				exec.Command("git", "add", filename)
+				exec.Command("git", "commit", "--amend", "--date=" + date.Format("2006-01-02"), "-m", message)
+			}
+
+			// 4. push
+			fmt.Print("是否上传到远程客户端？[Y/n] ")
+			var isPush string
+			fmt.Scanln(&isPush)
+			if isPush == "" || strings.ToLower(isPush) == "y" {
+				exec.Command("git", "push", "origin", "git-green")
+			}
+		} else {
+			fmt.Println("Bye.")
+			return
+		}
+
+
+		openFlag := cmd.Flag("open").Value.String() == "true"
+		if openFlag {
+			// TODO: 打开主页
+			open("https://wangrunlin.com")
+			fmt.Println("Open home page")
+		}
+	},
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
@@ -53,39 +124,25 @@ func Execute() {
 }
 
 func init() {
-	cobra.OnInitialize(initConfig)
-
-	// Here you will define your flags and configuration settings.
-	// Cobra supports persistent flags, which, if defined here,
-	// will be global for your application.
-
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.git-green.yaml)")
+	//rootCmd.PersistentFlags().StringVarP(&year, "year", "y", "2022", "generate year")
+	rootCmd.Flags().IntVarP(&year, "year", "y", 2022, "generate year")
 
 	// Cobra also supports local flags, which will only run
 	// when this action is called directly.
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.Flags().BoolP("open", "o", false, "Open home page")
 }
 
-// initConfig reads in config file and ENV variables if set.
-func initConfig() {
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		// Find home directory.
-		home, err := os.UserHomeDir()
-		cobra.CheckErr(err)
+var commands = map[string] string{
+	"windows": "cmd /c start ",
+	"darwin": "open",
+	"linux": "xdg-open",
+}
 
-		// Search config in home directory with name ".git-green" (without extension).
-		viper.AddConfigPath(home)
-		viper.SetConfigType("yaml")
-		viper.SetConfigName(".git-green")
+func open(url string) error {
+	command, ok := commands[runtime.GOOS]
+	if !ok {
+		fmt.Errorf("don't know how to open things on %s platform", runtime.GOOS)
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
-		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
-	}
+	return exec.Command(command, url).Start()
 }
