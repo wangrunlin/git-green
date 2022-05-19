@@ -1,6 +1,3 @@
-/*
-Copyright © 2022 Leo Wang leo@wangrunlin.com
-*/
 package cmd
 
 import (

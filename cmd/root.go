@@ -1,29 +1,9 @@
-/*
-Copyright © 2022 Leo Wang leo@wangrunlin.com
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-*/
 package cmd
 
 import (
 	"fmt"
 	"github.com/spf13/cobra"
+	"log"
 	"os"
 	"os/exec"
 	"runtime"
@@ -43,6 +23,12 @@ var rootCmd = &cobra.Command{
 	// has an action associated with it:
 	Run: func(cmd *cobra.Command, args []string) {
 		// verify default data
+		fileInfo, err := os.Stat(".git")
+		if err != nil || !fileInfo.IsDir() {
+			fmt.Println("不是 git 文件夹根目录！")
+			fmt.Errorf("%s", err)
+			return
+		}
 
 		// default data
 		fmt.Print("默认生成最近一年（365天）的数据, 是否确认？[Y/n] ")
@@ -54,15 +40,14 @@ var rootCmd = &cobra.Command{
 			// 0.1 确保存在 git 命令
 
 			branch := "git-green"
-			// 1. checkout
+			// 1. checkout branch
 			s, _ := os.Stat(".git/refs/heads/" + branch)
 			if s != nil {
 				fmt.Println(branch + " 分支已存在")
-				exec.Command("git", "checkout", branch)
+				RunCommand("git", "checkout", branch)
 			} else {
-
 				fmt.Println(branch + " 分支不存在, 新建分支")
-				exec.Command("git", "checkout", "-b", branch)
+				RunCommand("git", "checkout", "-b", branch)
 			}
 			// 2. for each
 			filename := "git-green.md"
@@ -74,7 +59,7 @@ var rootCmd = &cobra.Command{
 			}
 			defer f.Close()
 
-			count := 10
+			count := 365
 			date := time.Now()
 			var content string
 			for i := 0; i < count; i++ {
@@ -91,27 +76,26 @@ var rootCmd = &cobra.Command{
 
 				// 3. modify date
 				message := "Update git-green.md"
-				exec.Command("git", "add", filename)
-				exec.Command("git", "commit", "--amend", "--date=" + date.Format("2006-01-02"), "-m", message)
+				RunCommand("git", "add", filename)
+				RunCommand("git", "commit", "-m", message)
+				RunCommand("git", "commit", "--amend", "--no-edit", "--date=" + date.Format("2006-01-02"))
 			}
 
 			// 4. push
-			fmt.Print("是否上传到远程客户端？[Y/n] ")
-			var isPush string
-			fmt.Scanln(&isPush)
-			if isPush == "" || strings.ToLower(isPush) == "y" {
-				exec.Command("git", "push", "origin", "git-green")
+			// isPush config
+			isPush := cmd.Flag("push").Value.String() == "true"
+			if isPush {
+				RunCommand("git", "push", "origin", "git-green")
 			}
 		} else {
 			fmt.Println("Bye.")
 			return
 		}
 
-
 		openFlag := cmd.Flag("open").Value.String() == "true"
 		if openFlag {
 			// TODO: 打开主页
-			open("https://wangrunlin.com")
+			Open("https://wangrunlin.com")
 			fmt.Println("Open home page")
 		}
 	},
@@ -124,12 +108,9 @@ func Execute() {
 }
 
 func init() {
-	//rootCmd.PersistentFlags().StringVarP(&year, "year", "y", "2022", "generate year")
 	rootCmd.Flags().IntVarP(&year, "year", "y", 2022, "generate year")
-
-	// Cobra also supports local flags, which will only run
-	// when this action is called directly.
 	rootCmd.Flags().BoolP("open", "o", false, "Open home page")
+	rootCmd.Flags().BoolP("push", "p", false, "Push remote repository")
 }
 
 var commands = map[string] string{
@@ -138,11 +119,20 @@ var commands = map[string] string{
 	"linux": "xdg-open",
 }
 
-func open(url string) error {
+func Open(url string) error {
 	command, ok := commands[runtime.GOOS]
 	if !ok {
 		fmt.Errorf("don't know how to open things on %s platform", runtime.GOOS)
 	}
 
 	return exec.Command(command, url).Start()
+}
+
+func RunCommand(name string, arg ...string) {
+	cmd := exec.Command(name, arg...)
+	_, err := cmd.CombinedOutput()
+	if err != nil {
+		log.Fatalf("cmd.Run() failed with %s\n", err)
+	}
+	//fmt.Printf("out: %s\n", out)
 }
