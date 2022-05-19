@@ -1,5 +1,7 @@
 # Git Green
 
+[中文](README_zh.md) | [English](README.md)
+
 ## How to use ?
 
 1. Download
