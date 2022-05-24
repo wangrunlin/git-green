@@ -36,7 +36,8 @@ jobs:
         run: |
           echo GOOS
           [[ ${{ matrix.os }} == "windows" ]] && (echo 'This is win!'; suffix=.exe) # win has suffix
-          echo "$OUTPUT""$suffix"
+          echo "suffix: $suffix"
+          echo $OUTPUT$suffix
 #          go build -o $OUTPUT
 
 #      - name: Upload a Build Artifact
