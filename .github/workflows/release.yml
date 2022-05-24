@@ -35,7 +35,7 @@ jobs:
           OUTPUT: release/green-${{ matrix.os }}-${{ matrix.arch }}
         run: |
           echo GOOS
-          [[ ${{ matrix.os }} == "windows" ]] && (suffix=.exe) # win has suffix
+          [[ ${{ matrix.os }} == "windows" ]] && (echo 'This is win!'; suffix=.exe) # win has suffix
           echo "$OUTPUT""$suffix"
 #          go build -o $OUTPUT
 
