@@ -10,11 +10,22 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [linux, windows, darwin]
         arch: [amd64, arm64]
+        include:
+          - os: ubuntu-latest
+            output: green-linux-${{ matrix.arch }}
+            target: green-linux-${{ matrix.arch }}.tar.gz
+
+          - os: windows-latest
+            output: green-windows-${{ matrix.arch }}.exe
+            target: green-windows-${{ matrix.arch }}.zip
+
+          - os: macos-latest
+            output: green-darwin-${{ matrix.arch }}
+            target: green-darwin-${{ matrix.arch }}.zip
 
     steps:
       - uses: actions/checkout@v3
@@ -27,22 +38,19 @@ jobs:
 
       - name: Build
         env:
-          CGO_ENABLED: 0
-          GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
-          OUTPUT: green-${{ matrix.os }}-${{ matrix.arch }}
-        run: |
-          [[ ${{ matrix.os }} == "windows" ]] \
-          && go build -o $OUTPUT.exe \
-          || go build -o $OUTPUT
+        run: go build -o ${{ matrix.output }}
+#        run: |
+#          [[ ${{ matrix.kernel }} == "windows" ]] \
+#          && go build -o $OUTPUT.exe \
+#          || go build -o $OUTPUT
 
       - name: Compress && Remove
-        env: 
-          TARGET: green-${{ matrix.os }}-${{ matrix.arch }}
-        run: |
-          [[ ${{ matrix.os }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
-          [[ ${{ matrix.os }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
-          [[ ${{ matrix.os }} == "linux"   ]] && tar -zcf $TARGET.tar.gz $TARGET      && rm $TARGET
+        run: tar -acf ${{ matrix.target }} ${{ matrix.output }} && rm ${{ matrix.output }}
+#        run: |
+#          [[ ${{ matrix.kernel }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
+#          [[ ${{ matrix.kernel }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
+#          [[ ${{ matrix.kernel }} == "linux"   ]] && tar -zcf $TARGET.tar.gz $TARGET      && rm $TARGET
 
       - name: Create folder and rename
         run: |
