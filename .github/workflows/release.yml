@@ -53,7 +53,7 @@ jobs:
           TARGET: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.suffix}}
           OUTPUT: git-green${{ matrix.outputSuffix }}
 #          OUTPUT: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.outputSuffix}}
-        run: tar -acf $TARGET $OUTPUT && rm $OUTPUT
+        run: tar${{ outputSuffix }} -acf $TARGET $OUTPUT && rm $OUTPUT
 #        run: |
 #          [[ ${{ matrix.kernel }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
 #          [[ ${{ matrix.kernel }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
