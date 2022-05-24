@@ -32,6 +32,8 @@ jobs:
           GOARCH: ${{ matrix.arch }}
         run: |
           go env GOOS
+          go env GOARCH
+          go env CGO_ENABLED
 #          CGO_ENABLED=0 GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o green-${{ matrix.os }}-${{ matrix.arch }}
 
       - name: Upload binaries to release
