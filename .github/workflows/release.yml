@@ -36,11 +36,12 @@ jobs:
           && go build -o $OUTPUT.exe \
           || go build -o $OUTPUT
 
+      - run: mkdir release
+
       - name: Compress && Remove
         env: 
           TARGET: green-${{ matrix.os }}-${{ matrix.arch }}
         run: |
-          ls release && echo 'release is exist!' || (echo 'create release!'; mkdir release)
           [[ ${{ matrix.os }} == "windows" ]] && tar -acf release/$TARGET.zip    $TARGET.exe  && rm $TARGET.exe
           [[ ${{ matrix.os }} == "darwin"  ]] && tar -acf release/$TARGET.zip    $TARGET      && rm $TARGET
           [[ ${{ matrix.os }} == "linux"   ]] && tar -zcf release/$TARGET.tar.gz $TARGET      && rm $TARGET
