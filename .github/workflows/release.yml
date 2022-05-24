@@ -13,21 +13,20 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        arch: [amd64, arm64]
         include:
           - os: ubuntu-latest
             kernel: linux
-            arch: [amd64, arm64]
             suffix: .tar.gz
 
           - os: windows-latest
             kernel: windows
-            arch: [amd64, arm64]
             outputSuffix: .exe
             suffix: .zip
 
           - os: macos-latest
             kernel: darwin
-            arch: [amd64, arm64]
             suffix: .zip
 
     steps:
