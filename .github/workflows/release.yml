@@ -30,7 +30,7 @@ jobs:
           CGO_ENABLED: 0
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
-          OUTPUT: green-${{ matrix.os }}-{{ matrix.arch }}
+          OUTPUT: green-${{ matrix.os }}-${{ matrix.arch }}
         run: |
           echo $OUTPUT
 #          go build -o $OUTPUT
