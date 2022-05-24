@@ -27,7 +27,7 @@ jobs:
 
       - name: Create release folder
       - run: |
-        [ -d release ] && echo 'release is exist!' || (echo 'create release!'; mkdir release)
+        ls release && echo 'release is exist!' || (echo 'create release!'; mkdir release)
 
       - name: Build
         env:
