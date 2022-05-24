@@ -36,15 +36,18 @@ jobs:
           && go build -o $OUTPUT.exe \
           || go build -o $OUTPUT
 
-      - run: mkdir release
-
       - name: Compress && Remove
         env: 
           TARGET: green-${{ matrix.os }}-${{ matrix.arch }}
         run: |
-          [[ ${{ matrix.os }} == "windows" ]] && tar -acf release/$TARGET.zip    $TARGET.exe  && rm $TARGET.exe
-          [[ ${{ matrix.os }} == "darwin"  ]] && tar -acf release/$TARGET.zip    $TARGET      && rm $TARGET
-          [[ ${{ matrix.os }} == "linux"   ]] && tar -zcf release/$TARGET.tar.gz $TARGET      && rm $TARGET
+          [[ ${{ matrix.os }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
+          [[ ${{ matrix.os }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
+          [[ ${{ matrix.os }} == "linux"   ]] && tar -zcf $TARGET.tar.gz $TARGET      && rm $TARGET
+
+      - name: Create folder and rename
+        run: |
+          mkdir release
+          mv green-* release/
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
