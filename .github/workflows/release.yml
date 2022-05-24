@@ -25,7 +25,7 @@ jobs:
           go-version: 1.18
           check-latest: true
 
-      - run: mkdir release
+      - run: [[ -d release ]] && echo 'release is exist!' || (echo 'create release!'; mkdir release)
 
       - name: Build
         env:
@@ -42,7 +42,6 @@ jobs:
         env: 
           TARGET: green-${{ matrix.os }}-${{ matrix.arch }}
         run: |
-          # 2. compress && remove
           [[ ${{ matrix.os }} == "windows" ]] && tar -acf release/$TARGET.zip    $TARGET.exe  && rm $TARGET.exe
           [[ ${{ matrix.os }} == "darwin"  ]] && tar -acf release/$TARGET.zip    $TARGET      && rm $TARGET
           [[ ${{ matrix.os }} == "linux"   ]] && tar -zcf release/$TARGET.tar.gz $TARGET      && rm $TARGET
