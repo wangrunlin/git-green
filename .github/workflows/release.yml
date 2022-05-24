@@ -30,11 +30,16 @@ jobs:
           CGO_ENABLED: 0
           GOOS: ${{ matrix.os }}
           GOARCH: ${{ matrix.arch }}
+          OUTPUT: green-${{ matrix.os }}-{{ matrix.arch }}
         run: |
-          go env GOOS
-          go env GOARCH
-          go env CGO_ENABLED
-#          CGO_ENABLED=0 GOOS=${{ matrix.os }} GOARCH=${{ matrix.arch }} go build -o green-${{ matrix.os }}-${{ matrix.arch }}
+          echo $OUTPUT
+#          go build -o $OUTPUT
+
+#      - name: Upload a Build Artifact
+#        uses: actions/upload-artifact@v3.1.0
+#        with:
+#          name: release
+#          path: release
 
       - name: Upload binaries to release
         if: ${{ startsWith(github.ref, 'refs/tags/v') }}
