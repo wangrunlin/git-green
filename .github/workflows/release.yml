@@ -16,16 +16,17 @@ jobs:
         arch: [amd64, arm64]
         include:
           - os: ubuntu-latest
-            output: green-linux-${{ matrix.arch }}
-            target: green-linux-${{ matrix.arch }}.tar.gz
+            kernel: linux
+            suffix: .tar.gz
 
           - os: windows-latest
-            output: green-windows-${{ matrix.arch }}.exe
-            target: green-windows-${{ matrix.arch }}.zip
+            kernel: windows
+            outputSuffix: .exe
+            suffix: .zip
 
           - os: macos-latest
-            output: green-darwin-${{ matrix.arch }}
-            target: green-darwin-${{ matrix.arch }}.zip
+            kernel: darwin
+            suffix: .zip
 
     steps:
       - uses: actions/checkout@v3
@@ -39,14 +40,18 @@ jobs:
       - name: Build
         env:
           GOARCH: ${{ matrix.arch }}
-        run: go build -o ${{ matrix.output }}
+          OUTPUT: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.outputSuffix}}
+        run: go build -o $OUTPUT
 #        run: |
 #          [[ ${{ matrix.kernel }} == "windows" ]] \
 #          && go build -o $OUTPUT.exe \
 #          || go build -o $OUTPUT
 
       - name: Compress && Remove
-        run: tar -acf ${{ matrix.target }} ${{ matrix.output }} && rm ${{ matrix.output }}
+        env:
+          TARGET: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.suffix}}
+          OUTPUT: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.outputSuffix}}
+        run: tar -acf $TARGET $OUTPUT && rm $OUTPUT
 #        run: |
 #          [[ ${{ matrix.kernel }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
 #          [[ ${{ matrix.kernel }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
