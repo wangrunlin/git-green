@@ -36,7 +36,7 @@ jobs:
         run: |
           echo GOOS
           [[ ${{ matrix.os }} == "windows" ]] \
-          && echo $OUTPUT.exe # win has suffix
+          && echo $OUTPUT.exe # win has suffix \
           || echo $OUTPUT
 #          go build -o $OUTPUT
 
