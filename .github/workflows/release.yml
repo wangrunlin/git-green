@@ -23,6 +23,7 @@ jobs:
           - os: windows-latest
             kernel: windows
             archive: .zip
+            suffix: .exe
 
           - os: macos-latest
             kernel: darwin
@@ -40,15 +41,15 @@ jobs:
       - name: Build
         env:
           GOARCH: ${{ matrix.arch }}
-        run: go build
+        run: go build -o green${{ matrix.suffix }}
 
       - name: Compress && Remove (Windows)
         if: matrix.os == 'windows-latest'
-        run: tar.exe -acf release/green-windows-${{ matrix.arch }}.zip git-green.exe && rm git-green.exe
+        run: tar.exe -acf release/git-green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive }} green.exe && rm green.exe
 
       - name: Compress && Remove (Not Windows)
         if: matrix.os != 'windows-latest'
-        run: tar -acf release/green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive}} git-green && rm git-green
+        run: tar -acf release/git-green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive}} green && rm green
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
@@ -61,5 +62,5 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: release/green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive }}
+          file: release/git-green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive }}
           tag: ${{ github.ref }}
