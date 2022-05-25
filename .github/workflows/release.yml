@@ -41,19 +41,10 @@ jobs:
       - name: Build
         env:
           GOARCH: ${{ matrix.arch }}
-#          OUTPUT: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.outputSuffix}}
         run: go build
-#        run: |
-#          [[ ${{ matrix.kernel }} == "windows" ]] \
-#          && go build -o $OUTPUT.exe \
-#          || go build -o $OUTPUT
 
       - name: Compress && Remove
-        env:
-          TARGET: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.suffix}}
-          OUTPUT: git-green${{ matrix.outputSuffix }}
-#          OUTPUT: green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.outputSuffix}}
-        run: tar${{ matrix.outputSuffix }} -acf $TARGET $OUTPUT && rm $OUTPUT
+        run: tar${{ matrix.outputSuffix }} -acf green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.suffix}} git-green${{ matrix.outputSuffix }} && rm git-green${{ matrix.outputSuffix }}
 #        run: |
 #          [[ ${{ matrix.kernel }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
 #          [[ ${{ matrix.kernel }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
