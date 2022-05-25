@@ -15,19 +15,18 @@ jobs:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         arch: [amd64, arm64]
+        archive: .zip
         include:
           - os: ubuntu-latest
             kernel: linux
-            suffix: .tar.gz
+            archive: .tar.gz
 
           - os: windows-latest
             kernel: windows
-            outputSuffix: .exe
-            suffix: .zip
+            suffix: .exe
 
           - os: macos-latest
             kernel: darwin
-            suffix: .zip
 
     steps:
       - uses: actions/checkout@v3
@@ -44,16 +43,11 @@ jobs:
         run: go build
 
       - name: Compress && Remove
-        run: tar${{ matrix.outputSuffix }} -acf green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.suffix}} git-green${{ matrix.outputSuffix }} && rm git-green${{ matrix.outputSuffix }}
-#        run: |
-#          [[ ${{ matrix.kernel }} == "windows" ]] && tar -acf $TARGET.zip    $TARGET.exe  && rm $TARGET.exe
-#          [[ ${{ matrix.kernel }} == "darwin"  ]] && tar -acf $TARGET.zip    $TARGET      && rm $TARGET
-#          [[ ${{ matrix.kernel }} == "linux"   ]] && tar -zcf $TARGET.tar.gz $TARGET      && rm $TARGET
-
-      - name: Create folder and rename
         run: |
-          mkdir release
-          mv green-* release/
+          tar${{ matrix.suffix }} -acf \
+          release/green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive}} \
+          git-green${{ matrix.suffix }} \
+          && rm git-green${{ matrix.suffix }}
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.0
