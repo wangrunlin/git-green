@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+    branches: ["workflows"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        arch: [amd64, arm64]
+        include:
+          - os: ubuntu-latest
+            kernel: linux
+            archive: .tar.gz
+
+          - os: windows-latest
+            kernel: windows
+            archive: .zip
+
+          - os: macos-latest
+            kernel: darwin
+            archive: .zip
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setting up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.18
+          check-latest: true
+
+      - name: Build
+        env:
+          GOARCH: ${{ matrix.arch }}
+        run: go build
+
+      - name: Compress && Remove (Windows)
+        if: matrix.os == 'windows-latest'
+        run: tar.exe -acf release/green-windows-${{ matrix.arch }}.zip git-green.exe && rm git-green.exe
+
+      - name: Compress && Remove (Not Windows)
+        if: matrix.os != 'windows-latest'
+        run: tar -acf release/green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive}} git-green && rm git-green
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3.1.0
+        with:
+          name: release
+          path: release
+
+      - name: Upload binaries to release
+        if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: release/green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive }}
+          tag: ${{ github.ref }}
