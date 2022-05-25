@@ -42,11 +42,11 @@ jobs:
         run: go build
 
       - name: Compress && Remove (Windows)
-        if: matrix.os == "windows-latest"
+        if: matrix.os == 'windows-latest'
         run: tar.exe -acf release/green-windows-${{ matrix.arch }}.zip git-green.exe && rm git-green.exe
 
       - name: Compress && Remove (Not Windows)
-        if: matrix.os != "windows-latest"
+        if: matrix.os != 'windows-latest'
         run: tar -acf release/green-${{ matrix.kernel }}-${{ matrix.arch }}${{ matrix.archive}} git-green && rm git-green
 
       - name: Upload a Build Artifact
