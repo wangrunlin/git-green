@@ -39,7 +39,7 @@ var rootCmd = &cobra.Command{
 			// 0. 确保处于一个干净的具体上传权限的 git 项目
 			// 0.1 确保存在 git 命令
 
-			branch := "git-green"
+			branch := "gh-pages"
 			// 1. checkout branch
 			s, _ := os.Stat(".git/refs/heads/" + branch)
 			if s != nil {
@@ -85,7 +85,7 @@ var rootCmd = &cobra.Command{
 			// isPush config
 			isPush := cmd.Flag("push").Value.String() == "true"
 			if isPush {
-				RunCommand("git", "push", "origin", "git-green")
+				RunCommand("git", "push", "origin", "gh-pages")
 			}
 		} else {
 			fmt.Println("Bye.")
