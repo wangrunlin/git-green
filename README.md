@@ -6,6 +6,11 @@
 
 downloadable binary form the [releases page][]
 
+## Precondition
+
+- Git
+- A repository with a clean workspace and upload permissions on the `gh-pages` branch
+
 ## How to use ?
 
 1. Into your repo path
