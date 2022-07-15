@@ -43,10 +43,10 @@ var rootCmd = &cobra.Command{
 			// 1. checkout branch
 			s, _ := os.Stat(".git/refs/heads/" + branch)
 			if s != nil {
-				fmt.Println(branch + " 分支已存在")
+				fmt.Println(branch + " 分支已存在，切换分支")
 				RunCommand("git", "checkout", branch)
 			} else {
-				fmt.Println(branch + " 分支不存在, 新建分支")
+				fmt.Println(branch + " 分支不存在，新建分支")
 				RunCommand("git", "checkout", "-b", branch)
 			}
 			// 2. for each
@@ -108,7 +108,7 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().IntVarP(&year, "year", "y", 2022, "generate year")
+	//rootCmd.Flags().IntVarP(&year, "year", "y", 2022, "generate year")
 	rootCmd.Flags().BoolP("open", "o", false, "Open home page")
 	rootCmd.Flags().BoolP("push", "p", false, "Push remote repository")
 }
