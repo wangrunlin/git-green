@@ -17,7 +17,7 @@ var versionCmd = &cobra.Command{
 }
 
 func printGitGreenVersion() {
-	fmt.Println("git-green version v0.0.1")
+	fmt.Println("git-green version v0.0.2")
 }
 
 func init() {
