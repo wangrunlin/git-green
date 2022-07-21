@@ -1,20 +1,20 @@
-<h1 style="text-align: center">Welcome to Git Green 👋</h1>
+<h1 style="text-align: center">
+    <a href="https://wangrunlin.com/git-green/">Git Green</a>
+</h1>
 
-<p>
-  <a href="https://wangrunlin.github.io/git-green" target="_blank">
-    <img alt="Documentation" src="https://img.shields.io/badge/documentation-yes-brightgreen.svg" />
+<p style="text-align: center">
+  <a href="https://github.com/wangrunlin/git-green/releases/latest" target="_blank">
+    <img alt="Latest Release" src="https://img.shields.io/github/v/release/wangrunlin/git-green?display_name=tag&style=for-the-badge" />
   </a>
   <a href="LICENSE" target="_blank">
-    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
+    <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge" />
   </a>
-  <a href="https://twitter.com/wangrunlin_" target="_blank">
-    <img alt="Twitter: wangrunlin_" src="https://img.shields.io/twitter/follow/wangrunlin_.svg?style=social" />
+  <a href="https://github.com/wangrunlin/git-green/actions" target="_blank">
+    <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/wangrunlin/git-green/Release?style=for-the-badge">
   </a>
 </p>
 
 [中文](README_zh.md) | **English**
-
-### 🏠 [Homepage](https://wangrunlin.github.io/git-green)
 
 ## Installation
 
