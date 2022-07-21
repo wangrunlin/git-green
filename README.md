@@ -1,4 +1,4 @@
-<h1 style="text-align: center">
+<h1 align="center">
     <a href="https://wangrunlin.com/git-green/">Git Green</a>
 </h1>
 
