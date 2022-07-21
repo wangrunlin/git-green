@@ -1,8 +1,8 @@
-<h1 style="text-align: center">
+<h1 align="center">
     <a href="https://wangrunlin.com/git-green/">Git Green</a>
 </h1>
 
-<p style="text-align: center">
+<p align="center">
   <a href="https://github.com/wangrunlin/git-green/releases/latest" target="_blank">
     <img alt="Latest Release" src="https://img.shields.io/github/v/release/wangrunlin/git-green?display_name=tag&style=for-the-badge" />
   </a>
