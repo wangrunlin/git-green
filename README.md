@@ -1,7 +1,5 @@
 <h1 align="center">
-
-[Git Green][]
-
+    <a href="https://wangrunlin.com/git-green/">Git Green</a>
 </h1>
 
 <div align="center">
@@ -16,11 +14,7 @@
   </a>
 </div>
 
-<div align="center">
-
 [简体中文](README_zh.md) | **English**
-
-</div>
 
 ## Installation
 
@@ -71,5 +65,4 @@ This project is [MIT](LICENSE) licensed.
 
 [releases page]: https://github.com/wangrunlin/git-green/releases/latest
 [issues page]: https://github.com/wangrunlin/git-green/issues
-[Git Green]: https://wangrunlin.com/git-green/
 [Leo Wang]: https://wangrunlin.com
