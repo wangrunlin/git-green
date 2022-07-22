@@ -60,5 +60,11 @@ green
 Copyright © 2022 [Leo Wang](https://github.com/wangrunlin).  
 这个项目是 [MIT](LICENSE) 许可。
 
+## 感谢
+
+<a href="https://jb.gg/OpenSourceSupport">
+    <img width="60px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
+</a>
+
 
 [发布页面]: https://github.com/wangrunlin/git-green/releases/latest
