@@ -1,7 +1,5 @@
 <h1 align="center">
-
-[Git Green][]
-
+    <a href="https://wangrunlin.com/git-green/">Git Green</a>
 </h1>
 
 <div align="center">
@@ -16,11 +14,7 @@
   </a>
 </div>
 
-<div align="center">
-
 **简体中文** | [English](README.md)
-
-</div>
 
 ## 安装
 
@@ -71,5 +65,4 @@ Copyright © 2022 [Leo Wang][].
 
 [发布页面]: https://github.com/wangrunlin/git-green/releases/latest
 [问题页面]: https://github.com/wangrunlin/git-green/issues
-[Git Green]: https://wangrunlin.com/git-green/
 [Leo Wang]: https://wangrunlin.com
