@@ -44,7 +44,7 @@ green
 
 * 网站: https://wangrunlin.com
 * 推特: [@wangrunlin_](https://twitter.com/wangrunlin_)
-* Github: [@wangrunlin](https://github.com/wangrunlin)
+* GitHub: [@wangrunlin](https://github.com/wangrunlin)
 
 ## 🤝 贡献
 
