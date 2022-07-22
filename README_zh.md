@@ -14,7 +14,11 @@
   </a>
 </p>
 
-**中文** | [English](README.md)
+<p align="center">
+    <b>简体中文</b>
+    |
+    <a href="README.md">English</a>
+</p>
 
 ## 安装
 
