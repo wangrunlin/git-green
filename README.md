@@ -1,8 +1,10 @@
 <h1 align="center">
-    <a href="https://wangrunlin.com/git-green/">Git Green</a>
+
+[Git Green][]
+
 </h1>
 
-<p align="center">
+<div align="center">
   <a href="https://github.com/wangrunlin/git-green/releases/latest" target="_blank">
     <img alt="Latest Release" src="https://img.shields.io/github/v/release/wangrunlin/git-green?display_name=tag&style=for-the-badge" />
   </a>
@@ -12,13 +14,13 @@
   <a href="https://github.com/wangrunlin/git-green/actions" target="_blank">
     <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/wangrunlin/git-green/Release?style=for-the-badge">
   </a>
-</p>
+</div>
 
-<p align="center">
-    <a href="README_zh.md">简体中文</a>
-    |
-    <b>English</b>
-</p>
+<div align="center">
+
+[简体中文](README_zh.md) | **English**
+
+</div>
 
 ## Installation
 
@@ -44,16 +46,12 @@ green
 
 ## Author
 
-👤 **Leo Wang**
-
-* Website: https://wangrunlin.com
-* Twitter: [@wangrunlin_](https://twitter.com/wangrunlin_)
-* GitHub: [@wangrunlin](https://github.com/wangrunlin)
+- [Leo Wang][]
 
 ## 🤝 Contributing
 
 Contributions, issues and feature requests are welcome!  
-Feel free to check [issues page](https://github.com/wangrunlin/git-green/issues).
+Feel free to check [issues page][].
 
 ## Show your support
 
@@ -61,14 +59,17 @@ Give a ⭐️ if this project helped you!
 
 ## 📝 License
 
-Copyright © 2022 [Leo Wang](https://github.com/wangrunlin).  
+Copyright © 2022 [Leo Wang][].  
 This project is [MIT](LICENSE) licensed.
 
 ## Thanks
 
-<a href="https://jb.gg/OpenSourceSupport">
+<a href="https://jb.gg/OpenSourceSupport" target="_blank">
     <img width="60px" src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.png" alt="JetBrains Logo (Main) logo.">
 </a>
 
 
 [releases page]: https://github.com/wangrunlin/git-green/releases/latest
+[issues page]: https://github.com/wangrunlin/git-green/issues
+[Git Green]: https://wangrunlin.com/git-green/
+[Leo Wang]: https://wangrunlin.com
