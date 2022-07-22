@@ -1,8 +1,10 @@
 <h1 align="center">
-    <a href="https://wangrunlin.com/git-green/">Git Green</a>
+
+[Git Green][]
+
 </h1>
 
-<p align="center">
+<div align="center">
   <a href="https://github.com/wangrunlin/git-green/releases/latest" target="_blank">
     <img alt="Latest Release" src="https://img.shields.io/github/v/release/wangrunlin/git-green?display_name=tag&style=for-the-badge" />
   </a>
@@ -12,13 +14,13 @@
   <a href="https://github.com/wangrunlin/git-green/actions" target="_blank">
     <img alt="GitHub Workflow Status" src="https://img.shields.io/github/workflow/status/wangrunlin/git-green/Release?style=for-the-badge">
   </a>
-</p>
+</div>
 
-<p align="center">
-    <b>简体中文</b>
-    |
-    <a href="README.md">English</a>
-</p>
+<div align="center">
+
+**简体中文** | [English](README.md)
+
+</div>
 
 ## 安装
 
@@ -44,16 +46,12 @@ green
 
 ## 作者
 
-👤 **Leo Wang**
-
-* 网站: https://wangrunlin.com
-* 推特: [@wangrunlin_](https://twitter.com/wangrunlin_)
-* GitHub: [@wangrunlin](https://github.com/wangrunlin)
+- [Leo Wang][]
 
 ## 🤝 贡献
 
 欢迎贡献，问题和特征要求！  
-随时检查 [问题页面](https://github.com/wangrunlin/git-green/issues) 。
+随时检查 [问题页面][] 。
 
 ## 显示您的支持
 
@@ -61,7 +59,7 @@ green
 
 ## 📝 许可协议
 
-Copyright © 2022 [Leo Wang](https://github.com/wangrunlin).  
+Copyright © 2022 [Leo Wang][].  
 这个项目是 [MIT](LICENSE) 许可。
 
 ## 感谢
@@ -72,3 +70,6 @@ Copyright © 2022 [Leo Wang](https://github.com/wangrunlin).
 
 
 [发布页面]: https://github.com/wangrunlin/git-green/releases/latest
+[问题页面]: https://github.com/wangrunlin/git-green/issues
+[Git Green]: https://wangrunlin.com/git-green/
+[Leo Wang]: https://wangrunlin.com
